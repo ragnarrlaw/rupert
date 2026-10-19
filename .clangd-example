@@ -1,0 +1,6 @@
+CompileFlags:
+  Add: [
+    -I/<path-to->/rupert/include,
+    -I/<path-to->/rupert/src,
+    -I/<path-to->/rupert/tests,
+  ]

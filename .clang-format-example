@@ -1,0 +1,9 @@
+ColumnLimit: 150
+
+# Source - https://stackoverflow.com/a/69311475
+# Posted by Fiskmans, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-01-30, License - CC BY-SA 4.0
+UseTab: Always
+IndentWidth: 8
+TabWidth: 8
+

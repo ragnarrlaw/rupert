@@ -53,3 +53,11 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# project structure
+bin/
+out/
+
+# clang
+.clangd
+.clang-format

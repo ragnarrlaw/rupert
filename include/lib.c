@@ -7,6 +7,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <assert.h>
+#include <fcntl.h>
+#include <math.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+
 
 // random number generation
 typedef struct rng_state {
@@ -103,5 +110,7 @@ matrix *matrix_clone(const matrix *src); // deep copy
 matrix *matrix_copy(const matrix *src);	 // shallow copy
 void matrix_copy_to(const matrix *src, matrix *dst);
 void matrix_free(matrix *m);
+
+// tensor ops
 
 #endif // LIB_H

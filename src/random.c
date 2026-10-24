@@ -1,5 +1,8 @@
 #include "../include/lib.c"
 
+/* taken from rosettacode: https://rosettacode.org/wiki/Pseudo-random_numbers/Splitmix64#include 
+ * credit: Sebastiano Vigna */
+
 static uint64_t splitmix64_next(uint64_t *state);
 
 static uint64_t splitmix64_next(uint64_t *state) {
@@ -78,7 +81,7 @@ uint32_t rng_uniform_int(rng_state *r, uint32_t n) {
 	}
 }
 
-/* Box-Muller normal sampler (mean, std) returning float32 -> to get curves from flat lines. Caches the second sample for next call. */
+/* Box-Muller normal sampler (mean, std) returning float32 -> to get curves from flat lines. */
 void rng_normal_f32(rng_state *r, float mean, float stddev, float *out_1, float *out_2) {
 	// generate two uniform floats in (0,1], avoid zero.
 	// using u in (0,1] by mapping u = (u32 + 1) / 2^32 to avoid log(0).
@@ -127,7 +130,7 @@ void rng_shuffle_float_array(rng_state *r, float *arr, size_t n) {
 		return;
 	for (size_t i = n - 1; i > 0; --i) {
 		uint32_t j = rng_uniform_int(r, (uint32_t)(i + 1)); // [0, i]
-		int t = arr[i];
+		float t = arr[i];
 		arr[i] = arr[j];
 		arr[j] = t;
 	}

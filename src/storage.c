@@ -7,7 +7,7 @@
 
 #define CPU_ALLOCATION_SIZE(n_elements) (n_elements + (VECTOR_ALIGNMENT - 1) / VECTOR_ALIGNMENT) * VECTOR_ALIGNMENT;
 
-storage *storage_allocate(size_t n_elements, device_type device) {
+storage *storage_init(size_t n_elements, device_type device) {
 	float *data = NULL;
 	size_t size = 0;
 	storage_alloc_fn alloc_fn = NULL;
@@ -94,13 +94,14 @@ void storage_cpu_dealloc(void *s) {
 }
 
 // allocting GPU storage
-float *storage_gpu_alloc(size_t size);
+float *storage_gpu_alloc(size_t size) { return NULL; }
 
 // deallocting GPU storage
-void storage_gpu_dealloc(void *s);
+void storage_gpu_dealloc(void *s) {}
 
 // if the data is not owned by the storage itself
 float *storage_no_op_alloc(size_t size) { return NULL; }
+
 // if the data is not owned by the storage itself
 void storage_no_op_dealloc(void *s) {}
 

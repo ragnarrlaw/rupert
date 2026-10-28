@@ -1,19 +1,20 @@
 #ifndef LIB_H
 #define LIB_H
 
+#include <assert.h>
+#include <fcntl.h>
+#include <math.h>
 #include <stdatomic.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <assert.h>
-#include <fcntl.h>
-#include <math.h>
 #include <string.h>
+#include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
 
+#define VECTOR_ALIGNMENT 32
 
 // random number generation
 typedef struct rng_state {
@@ -64,11 +65,12 @@ typedef struct storage {
 	storage_dealloc_fn deallocator;
 } storage;
 
-storage *storage_align_allocate(size_t n_elements, device_type device);
+storage *storage_init(size_t n_elements, device_type device);
 float *storage_cpu_alloc(size_t size);						      // allocating CPU storage
 void storage_cpu_dealloc(void *s);						      // deallocating CPU storage
 float *storage_gpu_alloc(size_t size);						      // allocting GPU storage
-float *storage_gpu_dealloc(size_t size);					      // deallocting GPU storage
+void storage_gpu_dealloc(void *s);						      // deallocting GPU storage
+float *storage_no_op_alloc(size_t size);					      // if the data is not allocated by the callee
 void storage_no_op_dealloc(void *s);						      // if the data is not owned by the storage itself
 void storage_copy_cpu_to_gpu(storage *dst, const storage *src);			      // CPU to GPU
 void storage_copy_gpu_to_cpu(storage *dst, const storage *src);			      // GPU to CPU
@@ -92,8 +94,8 @@ typedef struct matrix {
 	matrix_flags flags;
 } matrix;
 
-matrix *matrix_create(size_t ndim, const size_t *dims, device_type device);
-matrix *matrix_fill(size_t ndim, const size_t *dims, device_type, float *fill_with);
+matrix *matrix_init(size_t ndim, const size_t *dims, device_type device);
+matrix *matrix_fill(size_t ndim, const size_t *dims, device_type, int fill_with);
 matrix *matrix_zero(size_t ndim, const size_t *dims, device_type device);
 matrix *matrix_ones(size_t ndim, const size_t *dims, device_type device);
 matrix *matrix_eye(size_t ndim, const size_t *dims, device_type device); // last two dimensions must be the same
